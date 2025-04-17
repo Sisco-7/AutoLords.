@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AUTOLORDS Portfolio of Engr. Jidey, the Gear Master, specializing in automatic transmission and overhauling with cutting-edge technology.">
+  <meta name="keywords" content="AUTOLORDS, Engr. Jidey, Gear Master, automatic transmission, mechanical engineering, Nigeria, overhauling">
+  <meta name="author" content="Sisco Ask">
+  <title>AUTOLORDS | Engr. Jidey, Gear Master</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/swiper/11.0.5/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swiper/11.0.5/swiper-bundle.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      background: #000;
+      color: #fff;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .canvas-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.65;
+      will-change: transform;
+    }
+    .nav-toggle {
+      display: none;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      z-index: 60;
+      cursor: pointer;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 3px;
+      background: #1E40AF;
+      position: absolute;
+      left: 8px;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+      box-shadow: 0 0 5px rgba(30, 64, 175, 0.5);
+    }
+    .nav-toggle span:nth-child(1) { top: 12px; }
+    .nav-toggle span:nth-child(2) { top: 18px; }
+    .nav-toggle span:nth-child(3) { top: 24px; }
+    .nav-toggle.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 18px;
+      background: #60A5FA;
+    }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 18px;
+      background: #60A5FA;
+    }
+    .nav-menu {
+      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    .nav-menu a {
+      position: relative;
+      padding-bottom: 4px;
+      transition: all 0.3s ease;
+    }
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #1E40AF, #60A5FA);
+      transition: width 0.3s ease;
+    }
+    .nav-menu a:hover::after { width: 100%; }
+    .nav-menu a:hover {
+      transform: translateY(-2px);
+      text-shadow: 0 0 8px rgba(30, 64, 175, 0.8);
+    }
+    .section {
+      scroll-margin-top: 80px;
+      position: relative;
+      z-index: 1;
+      padding: clamp(2rem, 6vw, 3rem) 1rem;
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: transparent;
+      border: 1px solid #1E40AF;
+      box-shadow: 0 0 15px rgba(30, 64, 175, 0.4);
+      border-radius: 1rem;
+      overflow: hidden;
+      width: 100%;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 25px rgba(30, 64, 175, 0.6);
+    }
+    .action-btn {
+      position: relative;
+      overflow: hidden;
+      background: #60A5FA;
+      box-shadow: 0 0 12px rgba(96, 165, 250, 0.5);
+      border-radius: 9999px;
+      transform: perspective(500px) rotateX(0deg);
+      transition: all 0.3s ease;
+    }
+    .action-btn:hover {
+      background: #3B82F6;
+      box-shadow: 0 0 20px rgba(96, 165, 250, 0.8);
+      transform: perspective(500px) rotateX(5deg);
+    }
+    .action-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: 0.5s;
+    }
+    .action-btn:hover::after { left: 100%; }
+    .text-glow-blue {
+      text-shadow: 0 0 12px rgba(30, 64, 175, 0.8), 0 0 25px rgba(30, 64, 175, 0.6);
+      color: #1E40AF;
+    }
+    .text-glow-light-blue {
+      text-shadow: 0 0 12px rgba(96, 165, 250, 0.8), 0 0 25px rgba(96, 165, 250, 0.6);
+      color: #60A5FA;
+    }
+    .text-color-mix {
+      background: linear-gradient(45deg, #1E40AF, #60A5FA);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .section h2:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 15px rgba(30, 64, 175, 0.9), 0 0 30px rgba(96, 165, 250, 0.7);
+      transition: all 0.3s ease;
+    }
+    .project-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+    }
+    .about-section {
+      position: relative;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.2), rgba(96, 165, 250, 0.2));
+      border-radius: 2rem;
+      box-shadow: 0 0 30px rgba(30, 64, 175, 0.5);
+      overflow: hidden;
+      padding: clamp(1.5rem, 5vw, 2rem);
+    }
+    .about-story {
+      position: relative;
+      padding: 2rem;
+      background: linear-gradient(145deg, rgba(30, 64, 175, 0.15), rgba(96, 165, 250, 0.15));
+      border-radius: 1.5rem;
+      box-shadow: 0 0 25px rgba(30, 64, 175, 0.3);
+      overflow: hidden;
+      display: grid;
+      gap: 1.5rem;
+    }
+    .about-story::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(30, 64, 175, 0.25), transparent);
+      animation: pulse 10s infinite;
+      z-index: -1;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.4); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.5; }
+    }
+    .about-story p {
+      line-height: 1.9;
+      font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+      color: #fff;
+      position: relative;
+      padding: 1.5rem;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .about-story p:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(30, 64, 175, 0.4);
+    }
+    .about-story p:nth-child(1) {
+      background: linear-gradient(90deg, rgba(30, 64, 175, 0.1), rgba(30, 64, 175, 0.05));
+      border-left: 5px solid #1E40AF;
+    }
+    .about-story p:nth-child(2) {
+      background: linear-gradient(90deg, rgba(96, 165, 250, 0.05), rgba(96, 165, 250, 0.1));
+      border-right: 5px solid #60A5FA;
+      text-align: right;
+    }
+    .about-story p:nth-child(3) {
+      background: linear-gradient(45deg, rgba(30, 64, 175, 0.1), rgba(96, 165, 250, 0.1));
+      border: 3px dashed #1E40AF;
+      text-align: center;
+    }
+    .about-story p:nth-child(4) {
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.15), rgba(96, 165, 250, 0.15));
+      position: relative;
+      overflow: hidden;
+    }
+    .about-story p:nth-child(4)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.3), transparent);
+      animation: shine 3s infinite;
+    }
+    @keyframes shine {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+    .about-story .highlight {
+      background: linear-gradient(45deg, #1E40AF, #60A5FA);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+    .gear-badge {
+      position: relative;
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: linear-gradient(45deg, #1E40AF, #60A5FA);
+      border-radius: 9999px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(30, 64, 175, 0.6);
+      animation: glow 2s ease-in-out infinite;
+    }
+    @keyframes glow {
+      0% { box-shadow: 0 0 15px rgba(30, 64, 175, 0.6); }
+      50% { box-shadow: 0 0 25px rgba(30, 64, 175, 0.8); }
+      100% { box-shadow: 0 0 15px rgba(30, 64, 175, 0.6); }
+    }
+    .social-icon {
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .social-icon:hover {
+      transform: scale(1.2);
+      color: #60A5FA;
+      text-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+    }
+    .service-filter {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.5rem;
+      background: transparent;
+      border: 1px solid #60A5FA;
+      color: #60A5FA;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #60A5FA;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
+    }
+    .chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      display: block; /* Ensure visibility */
+    }
+    .chat-toggle {
+      background: #60A5FA;
+      color: #fff;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .chat-toggle:hover {
+      transform: scale(1.1);
+    }
+    .chat-box {
+      display: none;
+      background: #1a1a1a;
+      border: 1px solid #1E40AF;
+      border-radius: 1rem;
+      width: 300px;
+      height: 400px;
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      box-shadow: 0 0 20px rgba(30, 64, 175, 0.5);
+      overflow: hidden;
+    }
+    .chat-box.active {
+      display: block;
+    }
+    .chat-header {
+      background: linear-gradient(45deg, #1E40AF, #60A5FA);
+      padding: 1rem;
+      color: #fff;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-body {
+      padding: 1rem;
+      height: calc(100% - 60px);
+      overflow-y: auto;
+      color: #fff;
+    }
+    .chat-body p {
+      margin: 0.5rem 0;
+    }
+    .stats-counter {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: linear-gradient(145deg, rgba(30, 64, 175, 0.15), rgba(96, 165, 250, 0.15));
+      border-radius: 1.5rem;
+      box-shadow: 0 0 20px rgba(30, 64, 175, 0.3);
+    }
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: rgba(30, 64, 175, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .stat-item:hover {
+      transform: scale(1.05);
+    }
+    .stat-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #60A5FA;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #1E40AF, #60A5FA);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, #1E40AF, #60A5FA);
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      position: relative;
+      margin: 2rem 0;
+      width: 50%;
+    }
+    .timeline-item.left {
+      left: 0;
+      text-align: right;
+      padding-right: 3rem;
+    }
+    .timeline-item.right {
+      left: 50%;
+      padding-left: 3rem;
+    }
+    .timeline-content {
+      background: linear-gradient(145deg, rgba(30, 64, 175, 0.15), rgba(96, 165, 250, 0.15));
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(30, 64, 175, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .timeline-icon {
+      font-size: 1.5rem;
+      color: #60A5FA;
+    }
+    .timeline-dot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #60A5FA;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 10px rgba(96, 165, 250, 0.6);
+    }
+    .timeline-item.left .timeline-dot {
+      right: -10px;
+    }
+    .timeline-item.right .timeline-dot {
+      left: -10px;
+    }
+    .parallax-bg {
+      position: relative;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .swiper {
+      width: 100%;
+      padding: 2rem 0;
+      overflow: hidden;
+      visibility: visible !important; /* Ensure visibility */
+    }
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .swiper-slide-active {
+      opacity: 1;
+    }
+    .testimonial-card {
+      background: linear-gradient(145deg, rgba(30, 64, 175, 0.15), rgba(96, 165, 250, 0.15));
+      border: 1px solid #1E40AF;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 350px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(30, 64, 175, 0.3);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 25px rgba(30, 64, 175, 0.5);
+    }
+    .testimonial-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1rem;
+      border: 2px solid #60A5FA;
+    }
+    footer {
+      padding: 1.5rem 1rem;
+      background: rgba(26, 26, 26, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(30, 64, 175, 0.3);
+      text-align: center;
+      font-size: clamp(0.75rem, 2vw, 0.875rem);
+      color: #a1a1aa;
+    }
+    footer p {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      letter-spacing: 1px;
+      background: linear-gradient(45deg, #1E40AF, #60A5FA);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(30, 64, 175, 0.5);
+    }
+    /* Enhanced Responsiveness */
+    @media (max-width: 1024px) {
+      .section {
+        padding: clamp(1.5rem, 5vw, 2rem) 1rem;
+      }
+      .text-7xl {
+        font-size: clamp(2rem, 7vw, 2.5rem);
+      }
+      .text-4xl {
+        font-size: clamp(1.25rem, 4vw, 1.5rem);
+      }
+      .text-xl {
+        font-size: clamp(0.75rem, 2vw, 0.875rem);
+      }
+      .card {
+        padding: 0.5rem;
+      }
+      .grid {
+        gap: clamp(0.5rem, 1vw, 0.75rem);
+      }
+      .about-story {
+        padding: 1rem;
+      }
+      .about-story p {
+        padding: 1rem;
+      }
+      .stats-counter {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 85%;
+        max-width: 280px;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        padding: 2rem 1rem;
+        z-index: 50;
+        box-shadow: -5px 0 15px rgba(30, 64, 175, 0.3);
+        border-left: 1px solid #1E40AF;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .nav-menu.active { transform: translateX(-100%); }
+      .nav-menu li { margin: 0.5rem 0; }
+      .nav-menu a { font-size: 1rem; display: block; }
+      .timeline::before {
+        left: 15px;
+      }
+      .timeline-item {
+        width: 100%;
+        padding-left: 2.5rem;
+        padding-right: 0.5rem;
+        text-align: left;
+      }
+      .timeline-item.left, .timeline-item.right {
+        left: 0;
+      }
+      .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot {
+        left: 5px;
+        right: auto;
+      }
+      .timeline-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .chat-widget {
+        bottom: 15px;
+        right: 15px;
+      }
+      .chat-box {
+        width: 90vw;
+        max-width: 300px;
+        height: 360px;
+        bottom: 70px;
+        right: 0;
+      }
+    }
+    @media (max-width: 640px) {
+      .section { padding: clamp(1rem, 3vw, 1.25rem) 0.5rem; }
+      .text-5xl { font-size: clamp(1.5rem, 6vw, 1.75rem); }
+      .text-4xl { font-size: clamp(1rem, 3.5vw, 1.125rem); }
+      .text-xl { font-size: clamp(0.625rem, 1.8vw, 0.75rem); }
+      .text-lg { font-size: clamp(0.5rem, 1.5vw, 0.625rem); }
+      .container { padding-left: 0.5rem; padding-right: 0.5rem; }
+      .about-story p {
+        padding: 0.5rem !important;
+        text-align: left !important;
+        border-right: none !important;
+        border-left: 2px solid #1E40AF !important;
+        background: rgba(30, 64, 175, 0.05) !important;
+        border-radius: 6px !important;
+      }
+      .about-story p:nth-child(3) {
+        border: 1px dashed #1E40AF !important;
+        text-align: left !important;
+      }
+      .grid { gap: clamp(0.25rem, 1vw, 0.5rem); }
+      .chat-box { width: 95%; right: 2.5%; bottom: 65px; }
+      .stats-counter { grid-template-columns: 1fr; }
+      .swiper { padding: 0.5rem 0; }
+      .testimonial-card { max-width: 260px; padding: 1rem; }
+      .chat-widget {
+        bottom: 10px;
+        right: 10px;
+      }
+      .chat-toggle {
+        width: 50px;
+        height: 50px;
+      }
+      .chat-box {
+        width: 90vw;
+        max-width: 280px;
+        height: 340px;
+        bottom: 60px;
+      }
+    }
+    @media (max-width: 480px) {
+      .section { padding: clamp(0.75rem, 2.5vw, 1rem) 0.25rem; }
+      .text-5xl { font-size: clamp(1.25rem, 5vw, 1.5rem); }
+      .text-4xl { font-size: clamp(0.875rem, 3vw, 1rem); }
+      .text-xl { font-size: clamp(0.5rem, 1.5vw, 0.625rem); }
+      .container { padding-left: 0.25rem; padding-right: 0.25rem; }
+      .card { padding: 0.5rem; }
+      .testimonial-card { max-width: 220px; padding: 0.75rem; }
+      .chat-box { width: 100%; right: 0; bottom: 60px; height: 360px; }
+      .action-btn { padding: 0.5rem 1rem; font-size: 0.75rem; }
+      .chat-widget {
+        bottom: 8px;
+        right: 8px;
+      }
+      .chat-toggle {
+        width: 45px;
+        height: 45px;
+      }
+      .chat-box {
+        width: 95vw;
+        max-width: 260px;
+        height: 320px;
+        bottom: 55px;
+      }
+    }
+    @media (max-width: 320px) {
+      .section { padding: clamp(0.5rem, 2vw, 0.75rem) 0.25rem; }
+      .text-5xl { font-size: clamp(1rem, 4vw, 1.25rem); }
+      .text-4xl { font-size: clamp(0.75rem, 2.5vw, 0.875rem); }
+      .text-xl { font-size: clamp(0.5rem, 1.2vw, 0.625rem); }
+      .container { padding-left: 0.25rem; padding-right: 0.25rem; }
+      .card { padding: 0.25rem; }
+      .testimonial-card { max-width: 200px; padding: 0.5rem; }
+      .action-btn { padding: 0.5rem 0.75rem; font-size: 0.625rem; }
+      .stats-counter { gap: 0.5rem; }
+      .stat-item { padding: 0.5rem; }
+      .stat-icon { font-size: 1.5rem; }
+      .stat-number { font-size: 1.5rem; }
+      .chat-widget {
+        bottom: 5px;
+        right: 5px;
+      }
+      .chat-toggle {
+        width: 40px;
+        height: 40px;
+      }
+      .chat-box {
+        width: 95vw;
+        max-width: 240px;
+        height: 300px;
+        bottom: 50px;
+      }
+    }
+    @media (min-width: 769px) {
+      .nav-toggle { display: none; }
+      .nav-menu { display: flex; gap: clamp(0.75rem, 1.5vw, 1.25rem); }
+      .nav-menu li { padding: 0; }
+      .nav-menu a { font-size: 0.875rem; }
+    }
+    @media (min-width: 1280px) {
+      .container { max-width: 1200px; }
+      .text-7xl { font-size: 4.5rem; }
+      .text-4xl { font-size: 2.25rem; }
+      .text-xl { font-size: 1.25rem; }
+    }
+    @media (min-width: 1920px) {
+      .container { max-width: 1400px; }
+      .text-7xl { font-size: 5rem; }
+      .text-4xl { font-size: 2.5rem; }
+      .text-xl { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas" class="canvas-bg"></canvas>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 w-full bg-gradient-to-r from-black/90 to-gray-900/90 backdrop-blur-md z-50 py-3">
+    <nav class="container mx-auto px-4 flex items-center justify-between">
+      <a href="#" class="text-lg font-bold text-blue-600 text-glow-blue">AUTOLORDS</a>
+      <button class="nav-toggle md:hidden focus:outline-none" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-menu hidden md:flex items-center">
+        <li><a href="#home" class="text-color-mix">Home</a></li>
+        <li><a href="#about" class="text-color-mix">About</a></li>
+        <li><a href="#certifications" class="text-color-mix">Certifications</a></li>
+        <li><a href="#services" class="text-color-mix">Services</a></li>
+        <li><a href="#projects" class="text-color-mix">Projects</a></li>
+        <li><a href="#appointment" class="text-color-mix">Appointment</a></li>
+        <li><a href="#connect" class="text-color-mix">Connect</a></li>
+      </ul>
+    </nav>
+  </header>
+
+ <!-- Hero Section -->
+<section id="home" class="section h-screen w-full flex items-center justify-center bg-transparent parallax-bg relative overflow-hidden" style="background-image: url('https://via.placeholder.com/1920x1080?text=Workshop+Hero'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black/40 z-10"></div>
+    <div class="container mx-auto px-4 text-center relative z-20">
+      <h1 class="text-5xl md:text-7xl font-extrabold text-blue-600 text-glow-blue mb-4 animate-fade-in">Engr. Jidey</h1>
+      <p class="text-xl md:text-2xl text-color-mix mb-8 max-w-3xl mx-auto">Gear Master of AUTOLORDS: Unleashing Transmission Excellence</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#appointment" class="action-btn inline-block text-white px-6 py-3 rounded-full transition text-glow-light-blue">Book Appointment</a>
+        <a href="#services" class="action-btn inline-block text-white px-6 py-3 rounded-full transition text-glow-light-blue">Explore Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section about-section">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-blue-600 text-glow-blue mb-12 text-center">The Gear Master</h2>
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <div class="md:w-1/2">
+          <img src="Engr. Richard..jpg" alt="Engr. Jidey" class="rounded-2xl w-full shadow-lg">
+        </div>
+        <div class="md:w-1/2">
+          <div class="about-story">
+            <p class="text-color-mix">Born <span class="highlight">Sholuade AbdulRoshyd Babajide</span>, Engr. Jidey is the <span class="gear-badge">Gear Master</span> at AUTOLORDS, wielding 20+ years of expertise to redefine automatic transmissions in Nigeria.</p>
+            <p class="text-color-mix">A YabaTech alumnus 2011, he mastered mechanical engineering and now blends <span class="highlight">high-performance CNC machines</span> and Bosch diagnostics with unparalleled skill, earning him a titan’s reputation.</p>
+            <p class="text-color-mix">From overhauling complex gear systems to crafting bespoke solutions with <span class="highlight">SolidWorks</span>, Jidey’s AUTOLORDS is a hub of innovation, serving clients with precision and passion.</p>
+            <p class="text-color-mix">Mentoring young engineers and pushing technological boundaries, Jidey’s mission is clear: “<span class="highlight">Master gears, power dreams</span>,” ensuring every vehicle roars back to life.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certifications" class="section bg-transparent">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-blue-600 text-glow-blue mb-12 text-center">Credentials & Expertise</h2>
+      <p class="text-lg text-color-mix text-center mb-8 max-w-3xl mx-auto">Engr. Jidey’s certifications reflect his mastery in automotive engineering.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card p-6 text-center">
+          <i class="fas fa-graduation-cap text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">HND in Mechanical Engineering</h3>
+          <p class="text-gray-300">Yaba College of Technology</p>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-certificate text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">ASE Certified</h3>
+          <p class="text-gray-300">Transmission Repair</p>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-tools text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">SolidWorks Professional</h3>
+          <p class="text-gray-300">CAD Design & Simulation</p>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-wrench text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Bosch Diagnostics</h3>
+          <p class="text-gray-300">Automotive Diagnostics</p>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-check-circle text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">ISO 9001 Auditor</h3>
+          <p class="text-gray-300">Quality Management</p>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-cogs text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">ATRA Member</h3>
+          <p class="text-gray-300">Transmission Rebuilders</p>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-laptop-code text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Autodesk AutoCAD</h3>
+          <p class="text-gray-300">2D/3D Automotive Design</p>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-tachometer-alt text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">ZF Transmission Tech</h3>
+          <p class="text-gray-300">ZF Systems Certified</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="section bg-transparent">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-blue-600 text-glow-blue mb-12 text-center">AUTOLORDS Services</h2>
+      <p class="text-lg text-color-mix text-center mb-8 max-w-3xl mx-auto">Cutting-edge automotive solutions with modern technology.</p>
+      <div class="service-filter">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="repairs">Repairs</button>
+        <button class="filter-btn" data-filter="design">Design</button>
+        <button class="filter-btn" data-filter="diagnostics">Diagnostics</button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 service-grid">
+        <div class="card service-item p-6 text-center" data-category="repairs">
+          <i class="fas fa-tools text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Transmission Overhaul</h3>
+          <p class="text-gray-300">Rebuilds using CNC precision and Bosch tools.</p>
+        </div>
+        <div class="card service-item p-6 text-center" data-category="design">
+          <i class="fas fa-cog text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Custom Gear Design</h3>
+          <p class="text-gray-300">Bespoke gears with SolidWorks and 3D simulation.</p>
+        </div>
+        <div class="card service-item p-6 text-center" data-category="diagnostics">
+          <i class="fas fa-stethoscope text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Advanced Diagnostics</h3>
+          <p class="text-gray-300">High-tech diagnostics with Bosch and OBD-II.</p>
+        </div>
+        <div class="card service-item p-6 text-center" data-category="repairs">
+          <i class="fas fa-car text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Differential Repair</h3>
+          <p class="text-gray-300">Precision repairs for durability.</p>
+        </div>
+        <div class="card service-item p-6 text-center" data-category="design">
+          <i class="fas fa-tachometer-alt text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Performance Upgrades</h3>
+          <p class="text-gray-300">Custom upgrades for speed and efficiency.</p>
+        </div>
+        <div class="card service-item p-6 text-center" data-category="repairs">
+          <i class="fas fa-wrench text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Torque Converter Repair</h3>
+          <p class="text-gray-300">Specialized repairs with modern diagnostics.</p>
+        </div>
+        <div class="card service-item p-6 text-center" data-category="diagnostics">
+          <i class="fas fa-laptop-code text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">ECU Programming</h3>
+          <p class="text-gray-300">Advanced ECU tuning with cutting-edge software.</p>
+        </div>
+        <div class="card service-item p-6 text-center" data-category="repairs">
+          <i class="fas fa-cogs text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Vehicle Overhauling</h3>
+          <p class="text-gray-300">Complete overhauls with high-tech equipment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section bg-transparent parallax-bg" style="background-image: url('https://via.placeholder.com/1920x1080?text=Projects+Background')">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-blue-600 text-glow-blue mb-12 text-center">AUTOLORDS Projects</h2>
+      <p class="text-lg text-color-mix text-center mb-8 max-w-3xl mx-auto">Witness the Gear Master’s precision in action.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card">
+          <img src="autoimg1.jpg" alt="Transmission Rebuild" class="project-img">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-color-mix mb-2">10-Speed Transmission Rebuild</h3>
+            <p class="text-gray-300 mb-4">Rebuilt a 10-speed transmission, boosting efficiency by 35%.</p>
+            <p class="text-gray-400"><strong>Tools:</strong> Diagnostic Scanners, Torque Wrenches</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="autoimg2.jpg" alt="Gearbox Design" class="project-img">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-color-mix mb-2">High-Performance Gearbox</h3>
+            <p class="text-gray-300 mb-4">Designed a lightweight gearbox, reducing weight by 20%.</p>
+            <p class="text-gray-400"><strong>Tools:</strong> SolidWorks, ANSYS</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="autoimg3.jpg" alt="Differential Repair" class="project-img">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-color-mix mb-2">Heavy-Duty Differential</h3>
+            <p class="text-gray-300 mb-4">Repaired a differential, enhancing lifespan by 25%.</p>
+            <p class="text-gray-400"><strong>Tools:</strong> CNC Machines, Calipers</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="autoimg4.jpg" alt="Transmission Upgrade" class="project-img">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-color-mix mb-2">Performance Transmission Upgrade</h3>
+            <p class="text-gray-300 mb-4">Upgraded a transmission, improving shift speed by 15%.</p>
+            <p class="text-gray-400"><strong>Tools:</strong> Diagnostic Tools, Custom Parts</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Appointment Section -->
+  <section id="appointment" class="section bg-transparent">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-blue-600 text-glow-blue mb-12 text-center">Book with AUTOLORDS</h2>
+      <p class="text-lg text-color-mix text-center mb-8 max-w-3xl mx-auto">Schedule your automotive needs with the Gear Master.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card p-6 text-center">
+          <i class="fas fa-tools text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Transmission Repair</h3>
+          <p class="text-gray-300 mb-4">Full overhaul or diagnostic for your transmission.</p>
+          <button onclick="sendWhatsAppMessage('Transmission Repair', 'I need a transmission repair. Please share slots.')" class="action-btn inline-block text-white px-6 py-3 rounded-full transition">Book Now</button>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-stethoscope text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Advanced Diagnostics</h3>
+          <p class="text-gray-300 mb-4">Precision diagnostics to pinpoint issues.</p>
+          <button onclick="sendWhatsAppMessage('Diagnostics', 'I need a diagnostic session. Can we discuss dates?')" class="action-btn inline-block text-white px-6 py-3 rounded-full transition">Book Now</button>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-user-tie text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Consulting</h3>
+          <p class="text-gray-300 mb-4">Expert advice on gear systems or projects.</p>
+          <button onclick="sendWhatsAppMessage('Consulting', 'I’d like a consulting session. Please share dates.')" class="action-btn inline-block text-white px-6 py-3 rounded-full transition">Book Now</button>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-cog text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Custom Design</h3>
+          <p class="text-gray-300 mb-4">Bespoke transmission or gear components.</p>
+          <button onclick="sendWhatsAppMessage('Custom Design', 'I’m interested in a custom design. Please provide details.')" class="action-btn inline-block text-white px-6 py-3 rounded-full transition">Book Now</button>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-tachometer-alt text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Performance Upgrades</h3>
+          <p class="text-gray-300 mb-4">Boost performance with custom upgrades.</p>
+          <button onclick="sendWhatsAppMessage('Performance Upgrades', 'I want performance upgrades. Please share slots.')" class="action-btn inline-block text-white px-6 py-3 rounded-full transition">Book Now</button>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-wrench text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Torque Converter Repair</h3>
+          <p class="text-gray-300 mb-4">Specialized torque converter repairs.</p>
+          <button onclick="sendWhatsAppMessage('Torque Converter Repair', 'I need torque converter repair. Please share slots.')" class="action-btn inline-block text-white px-6 py-3 rounded-full transition">Book Now</button>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-laptop-code text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">ECU Programming</h3>
+          <p class="text-gray-300 mb-4">Advanced ECU tuning for performance.</p>
+          <button onclick="sendWhatsAppMessage('ECU Programming', 'I need ECU programming. Please share slots.')" class="action-btn inline-block text-white px-6 py-3 rounded-full transition">Book Now</button>
+        </div>
+        <div class="card p-6 text-center">
+          <i class="fas fa-cogs text-4xl text-color-mix mb-4"></i>
+          <h3 class="text-xl font-semibold text-color-mix mb-2">Vehicle Overhauling</h3>
+          <p class="text-gray-300 mb-4">Complete overhauls with modern tech.</p>
+          <button onclick="sendWhatsAppMessage('Vehicle Overhauling', 'I need a vehicle overhaul. Please share slots.')" class="action-btn inline-block text-white px-6 py-3 rounded-full transition">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section id="timeline" class="section bg-transparent">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-blue-600 text-glow-blue mb-12 text-center">Gear Master’s Journey</h2>
+      <p class="text-lg text-color-mix text-center mb-8 max-w-3xl mx-auto">Milestones in Engr. Jidey’s legendary career.</p>
+      <div class="timeline">
+        <div class="timeline-item left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <i class="fas fa-graduation-cap timeline-icon"></i>
+            <div>
+              <h3 class="text-xl font-semibold text-color-mix mb-2">Early 2000s: YabaTech Graduation</h3>
+              <p class="text-gray-300">Earned HND in Mechanical Engineering.</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <i class="fas fa-rocket timeline-icon"></i>
+            <div>
+              <h3 class="text-xl font-semibold text-color-mix mb-2">2005: Founded AUTOLORDS</h3>
+              <p class="text-gray-300">Launched AUTOLORDS, specializing in transmissions.</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <i class="fas fa-certificate timeline-icon"></i>
+            <div>
+              <h3 class="text-xl font-semibold text-color-mix mb-2">2010: ASE Certification</h3>
+              <p class="text-gray-300">Achieved Automotive Service Excellence.</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <i class="fas fa-tools timeline-icon"></i>
+            <div>
+              <h3 class="text-xl font-semibold text-color-mix mb-2">2015: SolidWorks Certification</h3>
+              <p class="text-gray-300">Mastered CAD design for engineering.</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <i class="fas fa-wrench timeline-icon"></i>
+            <div>
+              <h3 class="text-xl font-semibold text-color-mix mb-2">2018: Bosch Diagnostics</h3>
+              <p class="text-gray-300">Certified in advanced diagnostics.</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <i class="fas fa-users timeline-icon"></i>
+            <div>
+              <h3 class="text-xl font-semibold text-color-mix mb-2">2020: Mentorship Program</h3>
+              <p class="text-gray-300">Launched training for young engineers.</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <i class="fas fa-tachometer-alt timeline-icon"></i>
+            <div>
+              <h3 class="text-xl font-semibold text-color-mix mb-2">2023: ZF Tech Certification</h3>
+              <p class="text-gray-300">Certified in ZF transmission systems.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section id="stats" class="section bg-transparent">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-blue-600 text-glow-blue mb-12 text-center">AUTOLORDS Impact</h2>
+      <div class="stats-counter">
+        <div class="stat-item">
+          <i class="fas fa-clock stat-icon"></i>
+          <div class="stat-number" data-target="20">0</div>
+          <p class="text-gray-300">Years Experience</p>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-cogs stat-icon"></i>
+          <div class="stat-number" data-target="250">0</div>
+          <p class="text-gray-300">Transmissions Overhauled</p>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-certificate stat-icon"></i>
+          <div class="stat-number" data-target="15">0</div>
+          <p class="text-gray-300">Certifications Earned</p>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-users stat-icon"></i>
+          <div class="stat-number" data-target="50">0</div>
+          <p class="text-gray-300">Engineers Mentored</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Connect Section -->
+  <section id="connect" class="section bg-transparent">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-blue-600 text-glow-blue mb-12 text-center">Join the AUTOLORDS Crew</h2>
+      <p class="text-lg text-color-mix text-center mb-8 max-w-3xl mx-auto">Connect with Engr. Jidey for projects, repairs, or updates.</p>
+      <div class="flex flex-wrap justify-center gap-8">
+        <a href="http://wa.me/+2347085187692" target="_blank" class="social-icon text-white text-2xl" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://tiktok.com/@engrrichard02" target="_blank" class="social-icon text-white text-2xl" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="https://x.com/autocrownz" target="_blank" class="social-icon text-white text-2xl" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://instagram.com/" target="_blank" class="social-icon text-white text-2xl" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://facebook.com/Engr AbdulRoshyd AutoTransmission" target="_blank" class="social-icon text-white text-2xl" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chat Widget -->
+  <div class="chat-widget">
+    <div class="chat-toggle">
+      <i class="fas fa-comment text-2xl"></i>
+    </div>
+    <div class="chat-box">
+      <div class="chat-header">
+        <span>Chat with AUTOLORDS</span>
+        <i class="fas fa-times close-chat cursor-pointer"></i>
+      </div>
+      <div class="chat-body">
+        <p>Hello! How can the Gear Master help you today?</p>
+        <p>Send a message via WhatsApp or explore our services!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Powered by AUTOLORDS | Built by Sisco Ask © <span id="footer-year"></span></p>
+  </footer>
+
+  <script>
+    // Navigation Toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        navToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+
+    // Dynamic Year
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // WhatsApp Messaging
+    function sendWhatsAppMessage(type, message) {
+      const yourNumber = '+2347085187692';
+      const encodedMessage = encodeURIComponent(`AUTOLORDS Appointment: ${type}\n${message}\nFrom: [Client Name]`);
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${yourNumber}&text=${encodedMessage}`;
+      window.open(whatsappUrl, '_blank');
+      alert(`Appointment request for "${type}" sent via WhatsApp. Engr. Jidey will respond soon!`);
+    }
+
+    // Canvas Background
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const text = 'GEAR MASTER';
+    const engSymbols = ['⚙️', '🔩', '🔧', '🚗'];
+    let particles = [];
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + 50;
+        this.vx = (Math.random() - 0.5) * 4;
+        this.vy = -Math.random() * 6 - 4;
+        this.size = Math.random() * 28 + 18;
+        this.opacity = Math.random() * 0.6 + 0.4;
+        this.isSymbol = Math.random() > 0.7;
+        this.text = this.isSymbol ? engSymbols[Math.floor(Math.random() * engSymbols.length)] : text[Math.floor(Math.random() * text.length)];
+        this.color = Math.random() > 0.5 ? '#1E40AF' : '#60A5FA';
+        this.glow = Math.random() * 15 + 10;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.03;
+        this.wave = Math.random() * Math.PI * 2;
+        this.waveSpeed = Math.random() * 0.05 + 0.02;
+      }
+      update() {
+        this.x += this.vx + Math.sin(this.wave) * 2;
+        this.y += this.vy;
+        this.wave += this.waveSpeed;
+        this.opacity -= 0.0005;
+        this.rotation += this.rotationSpeed;
+        if (this.y < -50 || this.opacity <= 0) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = this.color + `${Math.floor(this.opacity * 255).toString(16).padStart(2, '0')}`;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = this.glow;
+        ctx.font = `${this.size}px Poppins`;
+        ctx.fillText(this.text, 0, 0);
+        ctx.shadowBlur = 0;
+        ctx.restore();
+      }
+    }
+    function initParticles() {
+      const particleCount = Math.min(80, Math.floor(window.innerWidth / 10));
+      particles = [];
+      for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+    }
+    initParticles();
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Chat Widget
+    const chatToggle = document.querySelector('.chat-toggle');
+    const chatBox = document.querySelector('.chat-box');
+    const closeChat = document.querySelector('.close-chat');
+    chatToggle.addEventListener('click', () => {
+      chatBox.classList.toggle('active');
+    });
+    closeChat.addEventListener('click', () => {
+      chatBox.classList.remove('active');
+    });
+
+    // Service Filter
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const serviceItems = document.querySelectorAll('.service-item');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const filter = button.getAttribute('data-filter');
+        serviceItems.forEach(item => {
+          if (filter === 'all' || item.getAttribute('data-category') === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Stats Counter
+    function animateStats() {
+      const stats = document.querySelectorAll('.stat-number');
+      stats.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        let count = 0;
+        const increment = target / 100;
+        const updateCount = () => {
+          count += increment;
+          if (count < target) {
+            stat.textContent = Math.ceil(count);
+            requestAnimationFrame(updateCount);
+          } else {
+            stat.textContent = target;
+          }
+        };
+        updateCount();
+      });
+    }
+
+    // Swiper for Testimonials with Fade Animation
+    document.addEventListener('DOMContentLoaded', () => {
+      const swiper = new Swiper('.swiper', {
+        slidesPerView: 1,
+        spaceBetween: 15,
+        loop: true,
+        autoplay: { delay: 3000, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        },
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true
+        },
+        speed: 1000,
+        breakpoints: {
+          320: { slidesPerView: 1, spaceBetween: 5 },
+          480: { slidesPerView: 1, spaceBetween: 10 },
+          768: { slidesPerView: 2, spaceBetween: 15 },
+          1024: { slidesPerView: 3, spaceBetween: 20 }
+        }
+      });
+    });
+
+    // GSAP Animations
+    window.addEventListener('load', () => {
+      gsap.from('.animate-fade-in', { opacity: 0, y: 60, duration: 1.8, ease: 'power4.out' });
+      gsap.utils.toArray('.section').forEach(section => {
+        gsap.from(section.children, {
+          opacity: 0,
+          y: 50,
+          duration: 1.2,
+          stagger: 0.2,
+          ease: 'power4.out',
+          scrollTrigger: { trigger: section, start: 'top 85%' }
+        });
+      });
+      gsap.utils.toArray('.about-story p').forEach((p, i) => {
+        gsap.from(p, {
+          opacity: 0,
+          x: i % 2 === 0 ? -50 : 50,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: p, start: 'top 90%' }
+        });
+      });
+      gsap.from('.gear-badge', {
+        opacity: 0,
+        scale: 0.5,
+        duration: 1.5,
+        ease: 'elastic.out(1, 0.3)',
+        scrollTrigger: { trigger: '.gear-badge', start: 'top 90%' }
+      });
+      gsap.from('.timeline-item', {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.3,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.timeline', start: 'top 85%' }
+      });
+      gsap.from('.stat-item', {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.stats-counter',
+          start: 'top 85%',
+          onEnter: animateStats
+        }
+      });
+      gsap.from('.testimonial-card', {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.swiper', start: 'top 85%' }
+      });
+    });
+  </script>
+</body>
+</html>
